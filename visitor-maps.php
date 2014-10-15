@@ -868,8 +868,7 @@ function visitor_maps_activity_do() {
 
         // have an entry, update it
         $query = "UPDATE " . $wo_table_wo . "
-        SET
-        user_id          = '" . esc_sql($wo_user_id) . "',
+        SET user_id          = '" . esc_sql($wo_user_id) . "',
         name             = '" . esc_sql($name) . "',
         ip_address       = '" . esc_sql($ip_address) . "',";
 
