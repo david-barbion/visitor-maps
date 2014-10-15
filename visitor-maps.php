@@ -34,9 +34,9 @@ function visitor_maps_unset_options() {
   $wo_table_st = $wpdb->prefix . 'visitor_maps_st';
   $wo_table_ge = $wpdb->prefix . 'visitor_maps_ge';
 
-  $wpdb->query("DROP TABLE IF EXISTS `". $wo_table_wo . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `". $wo_table_st . "`");
-  $wpdb->query("DROP TABLE IF EXISTS `". $wo_table_ge . "`");
+  $wpdb->query("DROP TABLE IF EXISTS ". $wo_table_wo );
+  $wpdb->query("DROP TABLE IF EXISTS ". $wo_table_st );
+  $wpdb->query("DROP TABLE IF EXISTS ". $wo_table_ge );
 
   delete_option('visitor_maps');
   delete_option('visitor_maps_upgrade_1');
@@ -57,8 +57,7 @@ function visitor_maps_upgrade_1() {
   if (!get_option('visitor_maps_upgrade_1')) {
     // just now updating, run upgrade patch
     $wo_table_wo = $wpdb->prefix . 'visitor_maps_wo';
-    $wpdb->query("ALTER TABLE `". $wo_table_wo . "`
-    ADD INDEX nickname_time_last_click (`nickname`, `time_last_click`)");
+    $wpdb->query("CREATE INDEX nickname_time_last_click on $wo_table_wo (nickname, time_last_click)") ;
     add_option('visitor_maps_upgrade_1',  array( 'upgraded' => 'true' ), '', 'yes');
   }
 } // end function visitor_maps_upgrade_1
@@ -604,49 +603,49 @@ function visitor_maps_install() {
     $wo_table_st = $wpdb->prefix . 'visitor_maps_st';
     $wo_table_ge = $wpdb->prefix . 'visitor_maps_ge';
 
-	if($wpdb->get_var("show tables like '". $wo_table_wo . "'") != $wo_table_wo) {
-	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $wo_table_wo . "` (
-       `session_id`      varchar(128) NOT NULL default '',
-       `ip_address`      varchar(20) NOT NULL default '',
-       `user_id`         bigint(20) unsigned NOT NULL default '0',
-       `name`            varchar(64) NOT NULL default '',
-       `nickname`        varchar(20) default NULL,
-       `country_name`    varchar(50) default NULL,
-       `country_code`    char(2) default NULL,
-       `city_name`       varchar(50) default NULL,
-       `state_name`      varchar(50) default NULL,
-       `state_code`      char(2) default NULL,
-       `latitude`        decimal(10,4) default '0.0000',
-       `longitude`       decimal(10,4) default '0.0000',
-       `last_page_url`   text NOT NULL,
-       `http_referer`    varchar(255) default NULL,
-       `user_agent`      varchar(255) NOT NULL default '',
-       `hostname`        varchar(255) default NULL,
-       `provider`        varchar(255) default NULL,
-       `time_entry`      int(10) unsigned NOT NULL default '0',
-       `time_last_click` int(10) unsigned NOT NULL default '0',
-       `num_visits`      int(10) unsigned NOT NULL default '0',
-        PRIMARY KEY  (`session_id`),
-        KEY `nickname_time_last_click` (`nickname`,`time_last_click`))");
+	if($wpdb->get_var("SELECT table_name FROM information_schema.tables WHERE table_name = '$wo_table_wo'") != $wo_table_wo) {
+	   $wpdb->query("CREATE TABLE IF NOT EXISTS ". $wo_table_wo . " (
+        session_id       varchar(128) NOT NULL default '',
+        ip_address       varchar(20) NOT NULL default '',
+        user_id          bigint NOT NULL default '0',
+        name             varchar(64) NOT NULL default '',
+        nickname         varchar(20) default NULL,
+        country_name     varchar(50) default NULL,
+        country_code     char(2) default NULL,
+        city_name        varchar(50) default NULL,
+        state_name       varchar(50) default NULL,
+        state_code       char(2) default NULL,
+        latitude         decimal(10,4) default '0.0000',
+        longitude        decimal(10,4) default '0.0000',
+        last_page_url    text NOT NULL,
+        http_referer     varchar(255) default NULL,
+        user_agent       varchar(255) NOT NULL default '',
+        hostname         varchar(255) default NULL,
+        provider         varchar(255) default NULL,
+        time_entry       bigint NOT NULL default '0',
+        time_last_click  bigint NOT NULL default '0',
+        num_visits       bigint NOT NULL default '0',
+        PRIMARY KEY  ( session_id ))") ;
+      $wpdb->query("create index nickname_time_last_click on $wo_table_wo (nickname,time_last_click)");
 	}
 
-    if($wpdb->get_var("show tables like '". $wo_table_st . "'") != $wo_table_st) {
-	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $wo_table_st . "` (
-        `type`  varchar(14) NOT NULL default '',
-        `count` mediumint(8) NOT NULL default '0',
-        `time`  datetime NOT NULL default '0000-00-00 00:00:00',
-         PRIMARY KEY  (`type`))");
+    if($wpdb->get_var("SELECT table_name FROM information_schema.tables WHERE table_name = '". $wo_table_st . "'") != $wo_table_st) {
+	   $wpdb->query("CREATE TABLE IF NOT EXISTS ". $wo_table_st . " (
+         type   varchar(14) NOT NULL default '',
+         count  integer NOT NULL default '0',
+         time   timestamp without time zone NOT NULL default now(),
+         PRIMARY KEY  (type))");
 
-       $wpdb->query("INSERT INTO `". $wo_table_st . "` (`type` ,`count` ,`time`) VALUES ('day', '1', now())");
-       $wpdb->query("INSERT INTO `". $wo_table_st . "` (`type` ,`count` ,`time`) VALUES ('month', '1', now())");
-       $wpdb->query("INSERT INTO `". $wo_table_st . "` (`type` ,`count` ,`time`) VALUES ('year', '1', now())");
-       $wpdb->query("INSERT INTO `". $wo_table_st . "` (`type` ,`count` ,`time`) VALUES ('all', '1', now())");
+       $wpdb->query("INSERT INTO ". $wo_table_st . " (type ,count ,time) VALUES ('day', '1', now())");
+       $wpdb->query("INSERT INTO ". $wo_table_st . " (type ,count ,time) VALUES ('month', '1', now())");
+       $wpdb->query("INSERT INTO ". $wo_table_st . " (type ,count ,time) VALUES ('year', '1', now())");
+       $wpdb->query("INSERT INTO ". $wo_table_st . " (type ,count ,time) VALUES ('all', '1', now())");
 	}
 
-    if($wpdb->get_var("show tables like '". $wo_table_ge . "'") != $wo_table_ge) {
-	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $wo_table_ge . "` (
-         `time_last_check` int(10) unsigned NOT NULL default '0',
-         `needs_update` tinyint(1) unsigned NOT NULL default '0')");
+    if($wpdb->get_var("SELECT table_name FROM information_schema.tables WHERE table_name = '". $wo_table_ge . "'") != $wo_table_ge) {
+	   $wpdb->query("CREATE TABLE IF NOT EXISTS ". $wo_table_ge . " (
+         time_last_check bigint NOT NULL default '0',
+         needs_update    smallint NOT NULL default '0')");
 	}
 
     // add this so the upgrade patch will not be triggered on a fresh install
@@ -934,7 +933,7 @@ function visitor_maps_activity_do() {
 
         $hostname = ($visitor_maps_opt['enable_host_lookups']) ? $this->gethostbyaddr_timeout($ip_address,2) : '';
 
-        $query = "INSERT IGNORE INTO " . $wo_table_wo . "
+        $query = "INSERT INTO " . $wo_table_wo . "
         (session_id,
         ip_address,
         user_id,
@@ -1062,7 +1061,7 @@ function set_whos_records() {
   SET
   count = '" . absint($visitors_count) . "',
   time = '".$mysql_now."'
-  WHERE (day('".$mysql_now."') != day(time) AND type = 'day')
+  WHERE (date_part('day', timestamp '".$mysql_now."') != date_part('day',time) AND type = 'day')
      OR (count < '" . absint($visitors_count) . "' AND type = 'day')");
 
   // set month record if month changes or count is higher than stored count
@@ -1070,7 +1069,7 @@ function set_whos_records() {
   SET
   count = '" . absint($visitors_count) . "',
   time = '".$mysql_now."'
-  WHERE (month('".$mysql_now."') != month(time) AND type = 'month')
+  WHERE (date_part('month', timestamp '".$mysql_now."') != date_part('month',time) AND type = 'month')
      OR (count < '" . absint($visitors_count) . "' AND type = 'month')");
 
   // set year record if year changes or count is higher than stored count
@@ -1078,7 +1077,7 @@ function set_whos_records() {
   SET
   count = '" . absint($visitors_count) . "',
   time = '".$mysql_now."'
-  WHERE (year('".$mysql_now."') != year(time) AND type = 'year')
+  WHERE (date_part('year', timestamp '".$mysql_now."') != date_part('year',time) AND type = 'year')
      OR (count < '" . absint($visitors_count) . "' AND type = 'year')");
 
   // set all time record if count is higher than stored count

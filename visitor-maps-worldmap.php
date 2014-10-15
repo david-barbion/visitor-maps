@@ -298,21 +298,26 @@ $string .= "\n".'<!--[if lte IE 8 ]>
   if (!$visitor_maps_opt['hide_bots']) {
        // all visitors
        $rows_arr = $wpdb->get_results("
-                 SELECT SQL_CALC_FOUND_ROWS user_id, name, nickname, country_name, country_code, city_name, state_name, state_code, latitude, longitude
+                 SELECT user_id, name, nickname, country_name, country_code, city_name, state_name, state_code, latitude, longitude
                  FROM ".$wo_table_wo."
                  WHERE time_last_click > '" . absint($xx_secs_ago) . "' LIMIT ".$visitor_maps_opt['pins_limit'] ."",ARRAY_A );
 
-       $rows_count = $wpdb->get_var("SELECT FOUND_ROWS()");
+       $rows_count = $wpdb->get_var("
+                 SELECT count(*) FROM ".$wo_table_wo."
+                 WHERE time_last_click > '" . absint($xx_secs_ago) . "' LIMIT ".$visitor_maps_opt['pins_limit']);
 
   } else {
        // guests and members, no bots
        $rows_arr = $wpdb->get_results("
-                 SELECT SQL_CALC_FOUND_ROWS user_id, name, nickname, country_name, country_code, city_name, state_name, state_code, latitude, longitude
+                 SELECT user_id, name, nickname, country_name, country_code, city_name, state_name, state_code, latitude, longitude
                  FROM ".$wo_table_wo."
                  WHERE (name = 'Guest' AND time_last_click > '" . absint($xx_secs_ago) . "')
                  OR (name != 'Guest' AND user_id > 0 AND time_last_click > '" . absint($xx_secs_ago) . "') LIMIT ".$visitor_maps_opt['pins_limit'] ."",ARRAY_A );
 
-       $rows_count = $wpdb->get_var("SELECT FOUND_ROWS()");
+       $rows_count = $wpdb->get_var("
+                 SELECT count(*) FROM ".$wo_table_wo."
+                 WHERE (name = 'Guest' AND time_last_click > '" . absint($xx_secs_ago) . "')
+                 OR (name != 'Guest' AND user_id > 0 AND time_last_click > '" . absint($xx_secs_ago) . "') LIMIT ".$visitor_maps_opt['pins_limit']);
   }
 
   // create pin on the map

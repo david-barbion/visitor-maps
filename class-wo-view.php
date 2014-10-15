@@ -653,7 +653,7 @@ function check_geoip_date($geoip_file_time) {
      // jump start the timestamp now
      //echo "jump starting the timestamp now...<br />";
      $time_last_check   = time() - (7 * 60*60);
-     $wpdb->query("INSERT INTO " . $wo_table_ge . " (`time_last_check`) VALUES ('" .absint($time_last_check ) . "');");
+     $wpdb->query("INSERT INTO " . $wo_table_ge . " (time_last_check) VALUES ('" .absint($time_last_check ) . "');");
   }
 
   // have I checked this already in the last 6 hours?

@@ -214,17 +214,19 @@ $this->set['image_pin_3'] = 'wo-pin-green5x5.jpg';
   $rows_arr = array();
   if ($visitor_maps_opt['hide_bots']) {
 
-       $rows_arr = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS user_id, name, longitude, latitude FROM ".$wo_table_wo."
+       $rows_arr = $wpdb->get_results("SELECT user_id, name, longitude, latitude FROM ".$wo_table_wo."
                  WHERE name = 'Guest' AND time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit'] ."",ARRAY_A );
 
-       $rows_count = $wpdb->get_var("SELECT FOUND_ROWS()");
+       $rows_count = $wpdb->get_var("SELECT count(*) FROM ".$wo_table_wo." 
+                 WHERE name = 'Guest' AND time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit']);
 
   } else {
 
-       $rows_arr = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS user_id, name, longitude, latitude FROM ".$wo_table_wo."
+       $rows_arr = $wpdb->get_results("SELECT user_id, name, longitude, latitude FROM ".$wo_table_wo."
                  WHERE time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit'] ."",ARRAY_A );
 
-       $rows_count = $wpdb->get_var("SELECT FOUND_ROWS()");
+       $rows_count = $wpdb->get_var("SELECT count(*) FROM ".$wo_table_wo."
+                 WHERE time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit']);
   }
 
   $count = 0;
