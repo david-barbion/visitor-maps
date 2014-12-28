@@ -5,7 +5,7 @@ Contributor URI: http://blog.230ruedubac.fr/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG
 Tags: plugin, plugins, users, visitors, visitor, whos online, map, maps, geolocation, location, country, statistics, stats, widget, sidebar, admin, dashboard, multilingual, wpmu, buddypress
 Requires at least: 2.8
-Tested up to: 3.9.1
+Tested up to: 4.1
 Stable tag: trunk
 
 Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar. Has an admin dashboard to view visitor details.
@@ -34,7 +34,7 @@ Features:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.8+, WPMU, and BuddyPress. (Wordpress 3.9+ is highly recommended)
+ * Works with Wordpress 2.8+, WPMU, and BuddyPress. (Wordpress 4.1+ is highly recommended)
  * PHP5
  * 30 megs of server space(with geolocation enabled)
  * PHP register_globals and safe_mode should be set to "Off"
@@ -200,6 +200,11 @@ Yes, please read [How to translate Visitor Maps for WordPress](http://www.fastse
 Yes, please read [How to update a translation of Visitor Maps for WordPress](http://www.fastsecurecontactform.com/update-translation-visitor-maps) 
 
 ## Changelog
+
+= 1.5.8.6 =
+- (28 Dec 2014) - Improved timezone compliance with WP.
+- bing bot is recognized now.
+- some minor bug fixes.
 
 = 1.5.8.5 =
 - (15 May 2014) - Removed themefuse ad
