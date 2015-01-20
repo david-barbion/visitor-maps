@@ -1059,22 +1059,22 @@ function set_whos_records() {
   // set today record if day changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET count = '" . absint($visitors_count) . "',
-  time = now()'
-  WHERE (date_part('day', timestamp now()) != date_part('day',time) AND type = 'day')
+  time = now()
+  WHERE (date_part('day', now()) != date_part('day',time) AND type = 'day')
      OR (count < '" . absint($visitors_count) . "' AND type = 'day')");
 
   // set month record if month changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET count = '" . absint($visitors_count) . "',
   time = now()
-  WHERE (date_part('month', timestamp now()) != date_part('month',time) AND type = 'month')
+  WHERE (date_part('month', now()) != date_part('month',time) AND type = 'month')
      OR (count < '" . absint($visitors_count) . "' AND type = 'month')");
 
   // set year record if year changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET count = '" . absint($visitors_count) . "',
   time = now()
-  WHERE (date_part('year', timestamp now()) != date_part('year',time) AND type = 'year')
+  WHERE (date_part('year', now()) != date_part('year',time) AND type = 'year')
      OR (count < '" . absint($visitors_count) . "' AND type = 'year')");
 
   // set all time record if count is higher than stored count
@@ -1130,7 +1130,7 @@ function get_whos_records($visitors_count) {
 
   foreach( $visitors_arr as $visitors ) {
      if($visitors['type'] == 'day') {
-        $visitor_maps_stats['today'] = esc_html( __('Max visitors today', 'visitor-maps')).': ' . $visitors['count'] .' '.esc_html( __('at', 'visitor-maps')).' '. date($visitor_maps_opt['time_format'],strtotime(current_tilme($visitors['time'])));
+        $visitor_maps_stats['today'] = esc_html( __('Max visitors today', 'visitor-maps')).': ' . $visitors['count'] .' '.esc_html( __('at', 'visitor-maps')).' '. date($visitor_maps_opt['time_format'],strtotime(current_time($visitors['time'])));
         $string .= esc_html( __('Max visitors today', 'visitor-maps')).': ' . $visitors['count'] .' '.esc_html( __('at', 'visitor-maps')).' '. date($visitor_maps_opt['time_format'],strtotime(current_time($visitors['time']))).'<br />';
      }
      if($visitors['type'] == 'month'){
