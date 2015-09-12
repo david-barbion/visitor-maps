@@ -216,18 +216,18 @@ $this->set['image_pin_3'] = 'wo-pin-green5x5.jpg';
   if ($visitor_maps_opt['hide_bots']) {
 
        $rows_arr = $wpdb->get_results("SELECT user_id, name, longitude, latitude FROM ".$wo_table_wo."
-                 WHERE name = 'Guest' AND time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit'] ."",ARRAY_A );
+                 WHERE name = 'Guest' AND time_last_click > '" . $xx_secs_ago . "' LIMIT ".absint($visitor_maps_opt['pins_limit']) ."",ARRAY_A );
 
        $rows_count = $wpdb->get_var("SELECT count(*) FROM ".$wo_table_wo." 
-                 WHERE name = 'Guest' AND time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit']);
+                 WHERE name = 'Guest' AND time_last_click > '" . $xx_secs_ago . "' LIMIT ".absint($visitor_maps_opt['pins_limit']));
 
   } else {
 
        $rows_arr = $wpdb->get_results("SELECT user_id, name, longitude, latitude FROM ".$wo_table_wo."
-                 WHERE time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit'] ."",ARRAY_A );
+                 WHERE time_last_click > '" . $xx_secs_ago . "' LIMIT ".absint($visitor_maps_opt['pins_limit']) ."",ARRAY_A );
 
        $rows_count = $wpdb->get_var("SELECT count(*) FROM ".$wo_table_wo."
-                 WHERE time_last_click > '" . $xx_secs_ago . "' LIMIT ".$visitor_maps_opt['pins_limit']);
+                 WHERE time_last_click > '" . $xx_secs_ago . "' LIMIT ".absint($visitor_maps_opt['pins_limit']));
   }
 
   $count = 0;
@@ -451,7 +451,7 @@ function validate_color_wo($string) {
 function validate_text_align($string) {
  // only allow proper text align codes
   $allowed = array('ll','ul','lr','ur','c','ct','cb');
- if ( in_array($string, $allowed) ) {
+ if ( in_array($string, $allowed, true) ) {
     return true;
  }
  return false;
