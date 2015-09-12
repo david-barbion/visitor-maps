@@ -1090,31 +1090,31 @@ function set_whos_records() {
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET
   count = '" . absint($visitors_count) . "',
-  time = '".$mysql_now."'
-  WHERE (day('".$mysql_now."') != day(time) AND type = 'day')
+  time = now()
+  WHERE (date_part('day', now()) != date_part('day', time) AND type = 'day')
      OR (count < '" . absint($visitors_count) . "' AND type = 'day')");
 
   // set month record if month changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET
   count = '" . absint($visitors_count) . "',
-  time = '".$mysql_now."'
-  WHERE (month('".$mysql_now."') != month(time) AND type = 'month')
+  time = now()
+  WHERE (date_part('month', now()) != date_part('month', time) AND type = 'month')
      OR (count < '" . absint($visitors_count) . "' AND type = 'month')");
 
   // set year record if year changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET
   count = '" . absint($visitors_count) . "',
-  time = '".$mysql_now."'
-  WHERE (year('".$mysql_now."') != year(time) AND type = 'year')
+  time = now()
+  WHERE (date_part('year', now()) != date_part('year', time) AND type = 'year')
      OR (count < '" . absint($visitors_count) . "' AND type = 'year')");
 
   // set all time record if count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
   SET
   count = '" . absint($visitors_count) . "',
-  time = '".$mysql_now."'
+  time = now()
   WHERE count < '" . absint($visitors_count) . "'
   AND type = 'all'");
 
