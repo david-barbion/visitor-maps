@@ -897,8 +897,7 @@ function visitor_maps_activity_do() {
 
         // have an entry, update it
         $query = "UPDATE " . $wo_table_wo . "
-        SET
-        user_id          = '" . esc_sql($wo_user_id) . "',
+        SET user_id          = '" . esc_sql($wo_user_id) . "',
         name             = '" . esc_sql($name) . "',
         ip_address       = '" . esc_sql($ip_address) . "',";
 
@@ -1088,32 +1087,28 @@ function set_whos_records() {
 
   // set today record if day changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
-  SET
-  count = '" . absint($visitors_count) . "',
+  SET count = '" . absint($visitors_count) . "',
   time = now()
   WHERE (date_part('day', now()) != date_part('day', time) AND type = 'day')
      OR (count < '" . absint($visitors_count) . "' AND type = 'day')");
 
   // set month record if month changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
-  SET
-  count = '" . absint($visitors_count) . "',
+  SET count = '" . absint($visitors_count) . "',
   time = now()
   WHERE (date_part('month', now()) != date_part('month', time) AND type = 'month')
      OR (count < '" . absint($visitors_count) . "' AND type = 'month')");
 
   // set year record if year changes or count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
-  SET
-  count = '" . absint($visitors_count) . "',
+  SET count = '" . absint($visitors_count) . "',
   time = now()
   WHERE (date_part('year', now()) != date_part('year', time) AND type = 'year')
      OR (count < '" . absint($visitors_count) . "' AND type = 'year')");
 
   // set all time record if count is higher than stored count
   $wpdb->query("UPDATE " . $wo_table_st . "
-  SET
-  count = '" . absint($visitors_count) . "',
+  SET count = '" . absint($visitors_count) . "',
   time = now()
   WHERE count < '" . absint($visitors_count) . "'
   AND type = 'all'");
