@@ -3,11 +3,11 @@
 Plugin Name: Visitor Maps and Who's Online
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-visitor-maps.php
 Description: Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar to show how many users are online. Includes a Who's Online admin dashboard to view visitor details. The visitor details include: what page the visitor is on, IP address, host lookup, online time, city, state, country, geolocation maps and more. No API key needed.  <a href="plugins.php?page=visitor-maps/visitor-maps.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG">Donate</a>
-Version: 1.5.8.10
+Version: 1.5.8.11
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
-/*  Copyright (C) 2008-2015 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
+/*  Copyright (C) 2008-2016 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -683,8 +683,8 @@ function visitor_maps_install() {
     // add this so the upgrade patch 1 will not be triggered on a fresh install
     add_option('visitor_maps_upgrade_1',  array( 'upgraded' => 'true' ), '', 'yes');
 
-    // add this so the upgrade patch will not be triggered on a fresh install
-    add_option('visitor_maps_upgrade_1',  array( 'upgraded' => 'true' ), '', 'yes');
+    // add this so the upgrade patch 2 will not be triggered on a fresh install
+    add_option('visitor_maps_upgrade_2',  array( 'upgraded' => 'true' ), '', 'yes');
 
 } // end function visitor_maps_install
 
@@ -817,7 +817,7 @@ function visitor_maps_activity_do() {
     }
 
     // see if WP user
-    get_currentuserinfo();
+    wp_get_current_user();
     $wo_user_id = 0;
     if ( $spider_flag ){
       // is a bot, the bot name is extracted from the User Agent name later on in the whos-online viewer script
@@ -883,9 +883,6 @@ function visitor_maps_activity_do() {
 		}
 	}
 
-
-    // see if WP user
-    // get_currentuserinfo(); ... already got this in some lines above
     if ($visitor_maps_opt['hide_administrators'] && $user_ID != '' && current_user_can('level_10') ){
       // hide admin activity
       $ip_address = '';

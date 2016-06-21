@@ -3,9 +3,9 @@ Contributors: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 Contributor URI: http://blog.230ruedubac.fr/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG
-Tags: plugin, plugins, users, visitors, visitor, whos online, map, maps, geolocation, location, country, statistics, stats, widget, sidebar, admin, dashboard, multilingual, wpmu, buddypress
+Tags: plugin, plugins, users, visitors, visitor, whos online, map, maps, geolocation, location, country, statistics, stats, widget, sidebar, admin, dashboard, multilingual
 Requires at least: 2.8
-Tested up to: 4.3
+Tested up to: 4.5.2
 Stable tag: trunk
 
 Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar. Has an admin dashboard to view visitor details.
@@ -34,7 +34,7 @@ Features:
 
 Requirements/Restrictions:
 -------------------------
- * Works with Wordpress 2.8+, WPMU, and BuddyPress. (Wordpress 4.3+ is highly recommended)
+ * Wordpress 
  * PHP5
  * 30 megs of server space(with geolocation enabled)
  * PHP register_globals and safe_mode should be set to "Off"
@@ -161,28 +161,29 @@ Yes, If you use WPMU or BuddyPress you can have multiple blogs with individual v
 Yes. To use a translated version, you need to obtain or make the language file for it.
 At this point it would be useful to read [Installing WordPress in Your Language](http://codex.wordpress.org/Installing_WordPress_in_Your_Language "Installing WordPress in Your Language") from the Codex. You will need an .mo file for this plugin that corresponds with the "WPLANG" setting in your wp-config.php file. Translations are listed below -- if a translation for your language is available, all you need to do is place it in the `/wp-content/plugins/visitor-maps/languages` directory of your WordPress installation. If one is not available, and you also speak good English, please consider doing a translation yourself (see the next question).
 
-The following translations are included in the download zip file:
+The following translations are included:
 
-* Belorussian (be_BY) - Translated by [Marcis G](http://pc.de)
-* Brazilian Portuguese (pt_BR) - Translated by Miguel Netto
-* Bulgarian (bg_BG) - Translated by [Nicolas Nicolov](http://bnproject.com/)
-* Chinese (zh_CN) - Translated by [Awu](http://www.awuit.cn/)
-* Danish (da_DK) - Translated by [GeorgWP](http://wordpress.blogos.dk/wpdadkdownloads/)
-* Dutch (nl_NL) - Translated by [Ton Strijbosch](http://www.westkreek.nl/weblog/)
-* French (fr_FR) - Translated by [Whiler](http://blogs.wittwer.fr/)
-* German (de_DE) - Translated by [JZDM](http://jzdm.de)
-* Hebrew (he_IL) - Translated by [Udi Burg](http://blog.udiburg.com/)
-* Hungarian (hu_HU) - Translated by [varnyu]
-* Indonesian (id_ID) - Translated by [Masino Sinaga](http://www.masinosinaga.com/)
-* Italian (it_IT) - Translated by [Gianni Diurno](http://gidibao.net/)
-* Japanese (ja) - Translated by [Chestnut]
-* Lithuanian (lt_LT) - Translated by [Vincent G](http://www.Host1Free.com)
-* Polish (pl_PL) - Translated by Krzysztof Adamski(http://www.aton-ht.com/)
-* Portuguese (pt_PT) - Translated by Jose
-* Romanian (ro_RO) - Translated by [Anunturi Jibo](http://www.jibo.ro)
-* Russian (ru_RU) - Translated by [Zhmenia](http://zhmenia.wordpress.com)
-* Spanish (es_ES) - Translated by [Natalia Pujol](http://www.natygames.com)
-* Turkish (tr_TR) - Translated by Cenkgursu
+= Translators =
+* Belorussian (be_BY) - Marcis G
+* Brazilian Portuguese (pt_BR) - Miguel Netto
+* Bulgarian (bg_BG) - Nicolas Nicolov
+* Chinese (zh_CN) - Awu
+* Danish (da_DK) - GeorgWP
+* Dutch (nl_NL) - Ton Strijbosch
+* French (fr_FR) - Whiler
+* German (de_DE) - JZDM
+* Hebrew (he_IL) - Udi Burg
+* Hungarian (hu_HU) - varnyu
+* Indonesian (id_ID) - Masino Sinaga
+* Italian (it_IT) - Gianni Diurno
+* Japanese (ja) - Chestnut
+* Lithuanian (lt_LT) - Vincent G
+* Polish (pl_PL) - Krzysztof Adamski
+* Portuguese (pt_PT) - Jose
+* Romanian (ro_RO) - Anunturi Jibo
+* Russian (ru_RU) - Zhmenia
+* Spanish (es_ES) - Natalia Pujol
+* Turkish (tr_TR) - Cenkgursu
 * More are needed... Please help translate.
 
 = Can I provide a new translation? =
@@ -194,8 +195,11 @@ Yes, please read [How to translate Visitor Maps for WordPress](http://www.fastse
 Yes, please read [How to update a translation of Visitor Maps for WordPress](http://www.fastsecurecontactform.com/update-translation-visitor-maps) 
 
 
-
 == Changelog ==
+
+= 1.5.8.11 =
+- (18 Jun 2016) - fix wp_get_current_user error after wordpress 4.5
+- fix state was shown as US on who was online page
 
 = 1.5.8.10 =
 - (01 Sep 2015) - added the ability to dismiss the admin message about downloading the Visitor Maps Geolocation Addon plugin.

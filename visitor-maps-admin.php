@@ -124,8 +124,7 @@
 <a href="http://wordpress.org/plugins/visitor-maps/faq/" target="_blank"><?php echo __('FAQ', 'visitor-maps'); ?></a> |
 <a href="http://wordpress.org/support/view/plugin-reviews/visitor-maps?rate=5#postform" target="_blank"><?php echo __('Rate This', 'visitor-maps'); ?></a> |
 <a href="http://wordpress.org/support/plugin/visitor-maps" target="_blank"><?php echo __('Support', 'visitor-maps'); ?></a> |
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG" target="_blank"><?php echo __('Donate', 'visitor-maps'); ?></a> |
-<a href="http://www.642weather.com/weather/scripts.php" target="_blank"><?php echo __('Free PHP Scripts', 'visitor-maps'); ?></a> |
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG" target="_blank"><?php echo __('Donate', 'visitor-maps'); ?></a> | 
 <a href="http://www.fastsecurecontactform.com/support" target="_blank"><?php echo __('Contact', 'visitor-maps'); ?> Mike Challis</a>
 </p>
 
