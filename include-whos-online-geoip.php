@@ -518,17 +518,6 @@ function geoip_region_by_addr_VMWO($gi,$addr) {
   return _get_region_VMWO($gi, $ipnum);
 }
 
-function getdnsattributes_VMWO($l,$ip){
-  $r = new Net_DNS_Resolver();
-  $r->nameservers = array("ws1.maxmind.com");
-  $p = $r->search($l."." . $ip .".s.maxmind.com","TXT","IN");
-  $str = is_object($p->answer[0])?$p->answer[0]->string():'';
-  //ereg("\"(.*)\"",$str,$regs); // mike challis PHP5.3 fix
-  preg_match("/\"(.*)\"/",$str,$regs);
-  $str = isset($regs[1]) ? $regs[1] : '';
-  return $str;
-}
-
 // mchallis end geoip.inc ------------------------------------------------------
 
 // mchallis begin geoipregionvars.php ------------------------------------------

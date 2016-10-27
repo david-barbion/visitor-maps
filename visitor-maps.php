@@ -3,7 +3,7 @@
 Plugin Name: Visitor Maps and Who's Online
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-visitor-maps.php
 Description: Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar to show how many users are online. Includes a Who's Online admin dashboard to view visitor details. The visitor details include: what page the visitor is on, IP address, host lookup, online time, city, state, country, geolocation maps and more. No API key needed.  <a href="plugins.php?page=visitor-maps/visitor-maps.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG">Donate</a>
-Version: 1.5.8.11
+Version: 1.5.8.12
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
@@ -1468,19 +1468,6 @@ function visitor_maps_upgrader_restore() {
 } // end of class
 } // end of if class
 
-// Pre-2.8 compatibility
-if ( ! function_exists( 'esc_html' ) ) {
-	function esc_html( $text ) {
-		return wp_specialchars( $text );
-	}
-}
-
-// Pre-2.8 compatibility
-if ( ! function_exists( 'esc_attr' ) ) {
-	function esc_attr( $text ) {
-		return attribute_escape( $text );
-	}
-}
 
 if (class_exists("VisitorMaps")) {
  $visitor_maps = new VisitorMaps();
