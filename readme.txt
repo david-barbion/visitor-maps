@@ -1,11 +1,13 @@
 === Visitor Maps and Who's Online ===
-Contributors: Mike Challis
+Contributors: fastsecure, mikechallis
 Author URI: http://www.642weather.com/weather/scripts.php
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG
 Tags: plugin, plugins, users, visitors, visitor, whos online, map, maps, geolocation, location, country, statistics, stats, widget, sidebar, admin, dashboard, multilingual
-Requires at least: 3.0
-Tested up to: 4.6.1
-Stable tag: trunk
+Requires at least: 3.1.0
+Tested up to: 4.7
+Stable tag: 1.5.8.12
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar. Has an admin dashboard to view visitor details.
 
@@ -195,6 +197,9 @@ Yes, please read [How to update a translation of Visitor Maps for WordPress](htt
 
 
 == Changelog ==
+
+= 1.5.8.13 =
+- (16 Jun 2017) - Update plugin links.
 
 = 1.5.8.12 =
 - (22 Oct 2016) - fix deprecated errors

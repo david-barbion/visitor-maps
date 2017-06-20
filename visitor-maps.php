@@ -2,12 +2,12 @@
 /*
 Plugin Name: Visitor Maps and Who's Online
 Plugin URI: http://www.642weather.com/weather/scripts-wordpress-visitor-maps.php
-Description: Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar to show how many users are online. Includes a Who's Online admin dashboard to view visitor details. The visitor details include: what page the visitor is on, IP address, host lookup, online time, city, state, country, geolocation maps and more. No API key needed.  <a href="plugins.php?page=visitor-maps/visitor-maps.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG">Donate</a>
-Version: 1.5.8.12
+Description: Displays Visitor Maps with location pins, city, and country. Includes a Who's Online Sidebar to show how many users are online. Includes a Who's Online admin dashboard to view visitor details. The visitor details include: what page the visitor is on, IP address, host lookup, online time, city, state, country, geolocation maps and more. No API key needed.  <a href="options-general.php?page=visitor-maps/visitor-maps.php">Settings</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V3BPEZ9WGYEYG">Donate</a>
+Version: 1.5.8.13
 Author: Mike Challis
 Author URI: http://www.642weather.com/weather/scripts.php
 */
-/*  Copyright (C) 2008-2016 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
+/*  Copyright (C) 2008-2017 Mike Challis  (http://www.642weather.com/weather/contact_us.php)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -82,10 +82,10 @@ function visitor_maps_upgrade_2() {
   }
 } // end function visitor_maps_upgrade_2
 
-function visitor_maps_add_tabs() {
+function visitor_maps_admin_menu() {
     global $visitor_maps_opt;
 
-    add_submenu_page('plugins.php', __('Visitor Maps Options', 'visitor-maps'), __('Visitor Maps Options', 'visitor-maps'), 'manage_options', __FILE__,array(&$this,'visitor_maps_options_page'));
+    add_options_page( __('Visitor Maps Options', 'visitor-maps'), __('Visitor Maps', 'visitor-maps'), 'manage_options', __FILE__,array(&$this,'visitor_maps_options_page'));
     add_submenu_page('index.php', __('Who\'s Online', 'visitor-maps'), __('Who\'s Online', 'visitor-maps'), $visitor_maps_opt['dashboard_permissions'], 'visitor-maps',array(&$this,'visitor_maps_admin_view'));
     add_submenu_page('index.php', __('Who\'s Been Online', 'visitor-maps'), __('Who\'s Been Online', 'visitor-maps'), $visitor_maps_opt['dashboard_permissions'], 'whos-been-online',array(&$this,'visitor_maps_whos_been_online'));
 }
@@ -624,7 +624,7 @@ function visitor_maps_public_footer_stats() {
 function visitor_maps_activation_notice(){
     if ( !get_option('visitor_maps_dismiss') ) {
       // print message reminding to install  Maxmind GeoLiteCity database
-      echo '<div id="message" class="update-nag"><p><strong>'.__('Visitor Maps plugin needs the "Visitor Maps Geolocation Addon" plugin installed to enable the Maps and Geolocation.', 'visitor-maps').' <a href="http://www.642weather.com/weather/scripts-wordpress-visitor-maps-geoip.php" target="_blank">'. __('View download page', 'visitor-maps'). '</a> | <a href="' . wp_nonce_url(admin_url( 'plugins.php?page=visitor-maps/visitor-maps.php' ),'visitor-maps-geo_message') . '&amp;dismiss_geo_message=1">'. __('Dismiss', 'visitor-maps'). '</a></strong></p></div>';
+      echo '<div id="message" class="notice notice-warning"><p><strong>'.__('Visitor Maps plugin needs the "Visitor Maps Geolocation Addon" plugin installed to enable the Maps and Geolocation.', 'visitor-maps').' <a href="http://www.642weather.com/weather/scripts-wordpress-visitor-maps-geoip.php" target="_blank">'. __('View download page', 'visitor-maps'). '</a> | <a href="' . wp_nonce_url(admin_url( 'options-general.php?page=visitor-maps/visitor-maps.php' ),'visitor-maps-geo_message') . '&amp;dismiss_geo_message=1">'. __('Dismiss', 'visitor-maps'). '</a></strong></p></div>';
     }
 }
 
@@ -694,7 +694,7 @@ function visitor_maps_plugin_action_links( $links, $file ) {
 	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
 	if ( $file == $this_plugin ){
-	   $settings_link = '<a href="plugins.php?page=visitor-maps/visitor-maps.php">' . esc_html( __( 'Settings', 'visitor-maps' ) ) . '</a>';
+	   $settings_link = '<a href="options-general.php?page=visitor-maps/visitor-maps.php">' . esc_html( __( 'Settings', 'visitor-maps' ) ) . '</a>';
        array_unshift( $links, $settings_link ); // before other links
 	}
 	return $links;
@@ -894,7 +894,8 @@ function visitor_maps_activity_do() {
 
         // have an entry, update it
         $query = "UPDATE " . $wo_table_wo . "
-        SET user_id          = '" . esc_sql($wo_user_id) . "',
+        SET
+        user_id          = '" . esc_sql($wo_user_id) . "',
         name             = '" . esc_sql($name) . "',
         ip_address       = '" . esc_sql($ip_address) . "',";
 
@@ -977,7 +978,7 @@ function visitor_maps_activity_do() {
         time_entry,
         time_last_click,
         num_visits)
-        VALUES (
+        values (
                 '" . esc_sql($ip_address) . "',
                 '" . esc_sql($ip_address) . "',
                 '" . esc_sql($wo_user_id) . "',
@@ -1516,7 +1517,7 @@ if (isset($visitor_maps)) {
   }
 
   // admin options
-  add_action('admin_menu', array(&$visitor_maps,'visitor_maps_add_tabs'),1);
+  add_action('admin_menu', array(&$visitor_maps,'visitor_maps_admin_menu'),1);
 
   // adds "Settings" link to the plugin action page
   add_filter('plugin_action_links', array(&$visitor_maps,'visitor_maps_plugin_action_links'),10,2);
